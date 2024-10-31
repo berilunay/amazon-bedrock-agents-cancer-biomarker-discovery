@@ -1185,7 +1185,7 @@ Resources:
                                 "summary": "Query pubmed to relevant information from abstracts of biomedical articles.",
                                 "description": "Query pubmed to relevant information from abstracts of biomedical articles. The PubMed API takes in the user query then returns the abstracts of top 5 relevant articles.",
                                 "operationId": "query-pubmed",
-                                "x-requireConfirmation": "ENABLED"
+                                "x-requireConfirmation": "ENABLED",
                                 "parameters": [
                                     {
                                         "name": "query",
