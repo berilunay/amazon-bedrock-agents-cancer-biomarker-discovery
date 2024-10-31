@@ -236,7 +236,7 @@ if prompt:
             response_text, trace_text, files_generated = bedrock.invoke_agent(prompt, trace_placeholder)
 
              # Check if user confirmation is needed
-            if isinstance(response, dict) and response.get('needs_confirmation'):
+            if isinstance(response_text, dict) and response.get('needs_confirmation'):
                 response_placeholder.markdown(response_text['message'])
                 
                 # Create two columns for confirm/deny buttons
