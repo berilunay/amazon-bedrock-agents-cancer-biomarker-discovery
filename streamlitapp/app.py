@@ -230,25 +230,52 @@ if prompt:
         with col2:
             trace_placeholder = st.empty()
 
-        response_text, trace_text, files_generated = bedrock.invoke_agent(prompt, trace_placeholder)
+        #berilsaddition
+
+        try:
+            response_text, trace_text, files_generated = bedrock.invoke_agent(prompt, trace_placeholder)
+
+             # Check if user confirmation is needed
+            if isinstance(response, dict) and response.get('needs_confirmation'):
+                response_placeholder.markdown(response_text['message'])
+                
+                # Create two columns for confirm/deny buttons
+                col1, col2 = st.columns(2)
+                with col1:
+                    if st.button("✅ Confirm"):
+                        # Call invoke_agent with confirmation
+                        response_text, trace_text, files_generated = bedrock.invoke_agent(prompt, trace_placeholder, True)
+                        response_placeholder.markdown(response_text)
+                        if 'pending_confirmation' in st.session_state:
+                            del st.session_state['pending_confirmation']
+                with col2:
+                    if st.button("❌ Deny"):
+                        # Call invoke_agent with denial
+                        response_text, trace_text, files_generated = bedrock.invoke_agent(prompt, trace_placeholder, False)
+                        response_placeholder.markdown(response_text)
+                        if 'pending_confirmation' in st.session_state:
+                            del st.session_state['pending_confirmation']
         
-        st.session_state["chat_history"].append(
-            {"role": "assistant", "prompt": response_text, "trace": trace_text, "files": files_generated}
-        )
+            st.session_state["chat_history"].append(
+                {"role": "assistant", "prompt": response_text, "trace": trace_text, "files": files_generated}
+            )
 
-        response_placeholder.markdown(response_text, unsafe_allow_html=True)
-        
-        displayed_files = set()
-        for file in files_generated:
-            if file['path'] not in displayed_files:
-                if file['type'].startswith('image/'):
-                    st.image(file['path'], caption=file['name'])
-                else:
-                    st.download_button(f"Download {file['name']}", file['path'], file['name'])
-                displayed_files.add(file['path'])
+            #response_placeholder.markdown(response_text, unsafe_allow_html=True)
+            
+            displayed_files = set()
+            for file in files_generated:
+                if file['path'] not in displayed_files:
+                    if file['type'].startswith('image/'):
+                        st.image(file['path'], caption=file['name'])
+                    else:
+                        st.download_button(f"Download {file['name']}", file['path'], file['name'])
+                    displayed_files.add(file['path'])
 
-        bedrock.cleanup_temp_files()
-
+        except Exception as e:
+            st.error(f"Error: {str(e)}")
+        finally:
+            bedrock.cleanup_temp_files()
+            
 # Clear chat button
 if st.button("Clear Chat"):
     st.session_state["chat_history"] = []

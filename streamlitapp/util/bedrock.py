@@ -75,22 +75,63 @@ class BedrockAgent:
     def new_session(self):
         st.session_state["SESSION_ID"] = str(uuid.uuid1())
 
-    def invoke_agent(self, input_text, trace):
+    def invoke_agent(self, input_text, trace,confirmation_response=None):
         response_text = ""
         trace_text = ""
         step = 0
         files_generated = []
 
         try:
-            response = st.session_state["BEDROCK_RUNTIME_CLIENT"].invoke_agent(
-                inputText=input_text,
-                agentId=self.agent_id,
-                agentAliasId=self.agent_alias_id,
-                sessionId=st.session_state["SESSION_ID"],
-                enableTrace=True
-            )
+            if confirmation_response is None:
+                # Initial invocation
+                response = st.session_state["BEDROCK_RUNTIME_CLIENT"].invoke_agent(
+                    inputText=input_text,
+                    agentId=self.agent_id,
+                    agentAliasId=self.agent_alias_id,
+                    sessionId=st.session_state["SESSION_ID"],
+                    enableTrace=True
+                )
+            else:
+                # Confirmation response invocation
+                response = st.session_state["BEDROCK_RUNTIME_CLIENT"].invoke_agent(
+                    agentId=self.agent_id,
+                    agentAliasId=self.agent_alias_id,
+                    sessionId=st.session_state["SESSION_ID"],
+                    enableTrace=True,
+                    sessionState={
+                        'invocationId': st.session_state['pending_confirmation']['invocation_id'],
+                        'returnControlInvocationResults': [{
+                            'functionResult': {
+                                'actionGroup': st.session_state['pending_confirmation']['action_group'],
+                                'function': st.session_state['pending_confirmation']['function'],
+                                'confirmationState': 'CONFIRM' if confirmation_response else 'DENY',
+                                'responseBody': {
+                                    "TEXT": {
+                                        'body': ''
+                                    }
+                                }
+                            }
+                        }]
+                    }
+                )
+
+      
 
             for event in response["completion"]:
+                if 'returnControl' in event:
+                    #Store necessary information for confirmation
+                    st.session_state['pending_confirmation'] = {
+                        'invocation_id': event["returnControl"]["invocationId"],
+                        'action_group': event["returnControl"]["invocationInputs"][0]["functionInvocationInput"]["actionGroup"],
+                        'function': event["returnControl"]["invocationInputs"][0]["functionInvocationInput"]["function"]
+                    }
+                
+                    # Return special response for confirmation
+                    return {
+                        'needs_confirmation': True,
+                        'message': f"Do you want to proceed with this action?\nAction: {st.session_state['pending_confirmation']['action_group']}.{st.session_state['pending_confirmation']['function']}"
+                    }, trace_text, files_generated
+
                 if 'files' in event.keys():
                     files_generated.extend(self.process_files(event['files']))
 
