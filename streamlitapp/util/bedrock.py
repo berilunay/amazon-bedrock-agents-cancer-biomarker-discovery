@@ -13,8 +13,17 @@ import logging
 
 
 # Set up logging at the top of your file
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(sys.stdout)  # This ensures logs go to container logs
+    ]
+)
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+# Add a test log
+logger.info("Bedrock service initialized")
 
 class BedrockAgent:
     """BedrockAgent class for invoking an Anthropic AI agent.
@@ -126,8 +135,7 @@ class BedrockAgent:
 
             for event in response["completion"]:
                 if 'returnControl' in event:
-                    st.write(f"Debug: {event}")
-                    logger.info(f"Debug: {event}")
+                    logger.debug(f"Return Control Event: {json.dumps(event, indent=2)}")
                     #Store necessary information for confirmation
                     st.session_state['pending_confirmation'] = {
                         'invocation_id': event["returnControl"]["invocationId"],
