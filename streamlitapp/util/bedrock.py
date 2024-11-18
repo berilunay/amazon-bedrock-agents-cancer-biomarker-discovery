@@ -9,6 +9,13 @@ import shutil
 from io import BytesIO
 from PIL import Image
 
+import logging
+
+
+# Set up logging at the top of your file
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 class BedrockAgent:
     """BedrockAgent class for invoking an Anthropic AI agent.
 
@@ -119,7 +126,8 @@ class BedrockAgent:
 
             for event in response["completion"]:
                 if 'returnControl' in event:
-                    print('event:',event) 
+                    st.write(f"Debug: {event}")
+                    logger.info(f"Debug: {event}")
                     #Store necessary information for confirmation
                     st.session_state['pending_confirmation'] = {
                         'invocation_id': event["returnControl"]["invocationId"],
