@@ -107,7 +107,7 @@ class BedrockAgent:
                                 'confirmationState': 'CONFIRM' if confirmation_response else 'DENY',
                                 'responseBody': {
                                     "TEXT": {
-                                        'body': ''
+                                        'body': 'all worked good'
                                     }
                                 }
                             }
@@ -119,6 +119,7 @@ class BedrockAgent:
 
             for event in response["completion"]:
                 if 'returnControl' in event:
+                    print('event:',event) 
                     #Store necessary information for confirmation
                     st.session_state['pending_confirmation'] = {
                         'invocation_id': event["returnControl"]["invocationId"],
