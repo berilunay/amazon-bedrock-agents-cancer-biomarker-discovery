@@ -10,6 +10,7 @@ from io import BytesIO
 from PIL import Image
 
 import logging
+import sys
 
 
 # Set up logging at the top of your file
