@@ -3,6 +3,14 @@ from util.bedrock import BedrockAgent
 from util.bedrock import BedrockAgent
 import argparse
 import sys
+import logging
+
+# Configure logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 # Add command-line argument parsing
 parser = argparse.ArgumentParser(description="Biomarker Research Agent Streamlit App")
@@ -237,8 +245,8 @@ if prompt:
 
              # Check if user confirmation is needed
             if isinstance(response_text, dict) and response_text.get('needs_confirmation'):
-                response_placeholder.markdown(response_text['message'])
-                
+                #response_placeholder.markdown(response_text['message'])
+                st.session_state['pending_confirmation'] = True
                 # Create two columns for confirm/deny buttons
                 col1, col2 = st.columns(2)
                 with col1:
@@ -246,19 +254,24 @@ if prompt:
                         # Call invoke_agent with confirmation
                         response_text, trace_text, files_generated = bedrock.invoke_agent(prompt, trace_placeholder, True)
                         response_placeholder.markdown(response_text)
-                        if 'pending_confirmation' in st.session_state:
-                            del st.session_state['pending_confirmation']
+                        st.session_state["chat_history"].append(
+                            {"role": "assistant", "prompt": response_text, "trace": trace_text, "files": files_generated}
+                        )
                 with col2:
                     if st.button("❌ Deny"):
                         # Call invoke_agent with denial
                         response_text, trace_text, files_generated = bedrock.invoke_agent(prompt, trace_placeholder, False)
                         response_placeholder.markdown(response_text)
-                        if 'pending_confirmation' in st.session_state:
-                            del st.session_state['pending_confirmation']
+                        st.session_state["chat_history"].append(
+                            {"role": "assistant", "prompt": response_text, "trace": trace_text, "files": files_generated}
+                        )
         
-            st.session_state["chat_history"].append(
-                {"role": "assistant", "prompt": response_text, "trace": trace_text, "files": files_generated}
-            )
+            else:
+                # For non-confirmation responses, display directly
+                response_placeholder.markdown(response_text)
+                st.session_state["chat_history"].append(
+                    {"role": "assistant", "prompt": response_text, "trace": trace_text, "files": files_generated}
+                )
 
             #response_placeholder.markdown(response_text, unsafe_allow_html=True)
             
@@ -273,6 +286,7 @@ if prompt:
 
         except Exception as e:
             st.error(f"Error: {str(e)}")
+            logger.error(f"Error in chat flow: {str(e)}", exc_info=True)
         finally:
             bedrock.cleanup_temp_files()
             

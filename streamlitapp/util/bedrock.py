@@ -98,18 +98,9 @@ class BedrockAgent:
         step = 0
         files_generated = []
 
-        try:
-            if confirmation_response is None:
-                # Initial invocation
-                response = st.session_state["BEDROCK_RUNTIME_CLIENT"].invoke_agent(
-                    inputText=input_text,
-                    agentId=self.agent_id,
-                    agentAliasId=self.agent_alias_id,
-                    sessionId=st.session_state["SESSION_ID"],
-                    enableTrace=True
-                )
-            else:
-                # Confirmation response invocation
+        try: 
+            if confirmation_response is not None:
+            # Confirmation response invocation
                 response = st.session_state["BEDROCK_RUNTIME_CLIENT"].invoke_agent(
                     agentId=self.agent_id,
                     agentAliasId=self.agent_alias_id,
@@ -133,37 +124,32 @@ class BedrockAgent:
                         }]
                     }
                 )
+            else:
+                # Initial invocation
+                response = st.session_state["BEDROCK_RUNTIME_CLIENT"].invoke_agent(
+                    inputText=input_text,
+                    agentId=self.agent_id,
+                    agentAliasId=self.agent_alias_id,
+                    sessionId=st.session_state["SESSION_ID"],
+                    enableTrace=True
+                )
 
       
 
             for event in response["completion"]:
-                if 'returnControl' in event:
-                    try:
-                        logger.debug(f"Return Control Event: {json.dumps(event, indent=2)}")
-                        #Store necessary information for confirmation
-                        st.session_state['returnControl'] = {
-                            'invocation_id': event["returnControl"]["invocationId"],
-                            'action_group': event["returnControl"]["invocationInputs"][0]["apiInvocationInput"]["actionGroup"]
-                        }
-
-                        logger.debug(f"Successfully processed returnControl event for action group: {st.session_state['returnControl']['action_group']}")
-                    
-                        # Return special response for confirmation
-                        return {
-                            'needs_confirmation': True,
-                            'message': f"Do you want to proceed with this action?\nAction: {st.session_state['returnControl']['action_group']}"
-                        }, trace_text, files_generated
-                         
-                    except Exception as e:
-                        error_msg = f"Error processing returnControl event: {str(e)}"
-                        logger.error(error_msg)
-                        logger.error(f"Error type: {type(e)}")
-                        logger.error("Event data:", event)
-                        trace_text += error_msg + "\n"
-                        trace.markdown(error_msg)
-                        logger.debug(f"Error type: {type(e)}")
-                        logger.debug(f"Error message: {str(e)}")
-                        raise  # Re-raise the exception after logging
+                try:
+                    logger.debug(f"Return Control Event: {json.dumps(event, indent=2)}")
+                    st.session_state['returnControl'] = {
+                        'invocation_id': event["returnControl"]["invocationId"],
+                        'action_group': event["returnControl"]["invocationInputs"][0]["apiInvocationInput"]["actionGroup"]
+                    }
+                    return {
+                        'needs_confirmation': True,
+                        'message': f"Do you want to proceed with this action?\nAction: {st.session_state['returnControl']['action_group']}"
+                    }, trace_text, files_generated
+                except Exception as e:
+                    logger.error(f"Error processing returnControl: {str(e)}")
+                    raise
 
                 if 'files' in event.keys():
                     files_generated.extend(self.process_files(event['files']))
