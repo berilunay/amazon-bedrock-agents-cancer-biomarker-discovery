@@ -245,7 +245,7 @@ if prompt:
 
              # Check if user confirmation is needed
             if isinstance(response_text, dict) and response_text.get('needs_confirmation'):
-                #response_placeholder.markdown(response_text['message'])
+                response_placeholder.markdown(response_text['message'])
                 st.session_state['pending_confirmation'] = True
                 # Create two columns for confirm/deny buttons
                 col1, col2 = st.columns(2)

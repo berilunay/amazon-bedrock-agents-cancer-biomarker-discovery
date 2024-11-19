@@ -135,28 +135,35 @@ class BedrockAgent:
                 )
 
       
-
             for event in response["completion"]:
-                try:
-                    logger.debug(f"Return Control Event: {json.dumps(event, indent=2)}")
-                    st.session_state['returnControl'] = {
-                        'invocation_id': event["returnControl"]["invocationId"],
-                        'action_group': event["returnControl"]["invocationInputs"][0]["apiInvocationInput"]["actionGroup"]
-                    }
-                    return {
-                        'needs_confirmation': True,
-                        'message': f"Do you want to proceed with this action?\nAction: {st.session_state['returnControl']['action_group']}"
-                    }, trace_text, files_generated
-                except Exception as e:
-                    logger.error(f"Error processing returnControl: {str(e)}")
-                    raise
+                logger.debug(f"Processing event: {event}")  # Add debug logging
+            
+                # Check for returnControl
+                if 'returnControl' in event:
+                    try:
+                        logger.debug(f"Return Control Event: {json.dumps(event, indent=2)}")
+                        st.session_state['returnControl'] = {
+                            'invocation_id': event["returnControl"]["invocationId"],
+                            'action_group': event["returnControl"]["invocationInputs"][0]["apiInvocationInput"]["actionGroup"]
+                        }
+                        return {
+                            'needs_confirmation': True,
+                            'message': f"Do you want to proceed with this action?\nAction: {st.session_state['returnControl']['action_group']}"
+                        }, trace_text, files_generated
+                    except KeyError as e:
+                        logger.error(f"Error accessing returnControl data: {e}")
+                        logger.debug(f"Event structure: {event}")
+                        continue
 
                 if 'files' in event.keys():
                     files_generated.extend(self.process_files(event['files']))
 
                 if "chunk" in event:
-                    data = event["chunk"]["bytes"]
-                    response_text = data.decode("utf8")
+                    #data = event["chunk"]["bytes"]
+                    #response_text = data.decode("utf8")
+                    chunk_text = data.decode("utf8")
+                    response_text += chunk_text
+                    logger.debug(f"Processed chunk: {chunk_text}")
 
                 elif "trace" in event:
                     trace_obj = event["trace"]["trace"]
@@ -182,18 +189,20 @@ class BedrockAgent:
                         trace_text += f"\n\n\n---------- Step {step} ----------\n\n\n{json.dumps(trace_obj['postProcessingTrace']['modelInvocationOutput']['parsedResponse']['text'], indent=2)}\n\n\n"
                         trace.markdown(f"\n\n\n---------- Step {step} ----------\n\n\n{json.dumps(trace_obj['postProcessingTrace']['modelInvocationOutput']['parsedResponse']['text'], indent=2)}\n\n\n")
 
-        except Exception as e:
-            trace_text += f"Error during agent invocation: {str(e)}\n"
-            trace.markdown(f"Error during agent invocation: {str(e)}")
-            # Detailed logging for debugging
-            logger.debug(f"Full error details:")
-            logger.debug(f"Error type: {type(e)}")
-            logger.debug(f"Error message: {str(e)}")
-            # Log full stack trace
-            logger.exception("Stack trace:")
 
-        return response_text, trace_text, files_generated
-        
+            logger.debug(f"Final response_text: {response_text}")
+            return response_text, trace_text, files_generated
+
+        except Exception as e:
+                trace_text += f"Error during agent invocation: {str(e)}\n"
+                trace.markdown(f"Error during agent invocation: {str(e)}")
+                # Detailed logging for debugging
+                logger.debug(f"Full error details:")
+                logger.debug(f"Error type: {type(e)}")
+                logger.debug(f"Error message: {str(e)}")
+                # Log full stack trace
+                logger.exception("Stack trace:")
+            
     def list_png_files(self):
         try:
             self.s3_client = (
