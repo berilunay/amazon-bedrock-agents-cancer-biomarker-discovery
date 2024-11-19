@@ -159,11 +159,9 @@ class BedrockAgent:
                     files_generated.extend(self.process_files(event['files']))
 
                 if "chunk" in event:
-                    #data = event["chunk"]["bytes"]
-                    #response_text = data.decode("utf8")
-                    chunk_text = data.decode("utf8")
-                    response_text += chunk_text
-                    logger.debug(f"Processed chunk: {chunk_text}")
+                    data = event["chunk"]["bytes"]
+                    response_text += data.decode("utf8")
+       
 
                 elif "trace" in event:
                     trace_obj = event["trace"]["trace"]
