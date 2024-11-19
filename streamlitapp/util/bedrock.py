@@ -110,10 +110,10 @@ class BedrockAgent:
                         'invocationId': st.session_state['returnControl']['invocation_id'],
                         'returnControlInvocationResults': [{
                             'apiResult': {
-                            'actionGroup': event["returnControl"]["invocationInputs"][0]["apiInvocationInput"]["actionGroup"],
-                            'apiPath': event["returnControl"]["invocationInputs"][0]["apiInvocationInput"]["apiPath"],
+                            'actionGroup': st.session_state["returnControl"]["invocationInputs"][0]["apiInvocationInput"]["actionGroup"],
+                            'apiPath': st.session_state["returnControl"]["invocationInputs"][0]["apiInvocationInput"]["apiPath"],
                             'confirmationState': 'CONFIRM' if confirmation_response else 'DENY',
-                            'httpMethod': event["returnControl"]["invocationInputs"][0]["apiInvocationInput"]["httpMethod"],
+                            'httpMethod': st.session_state["returnControl"]["invocationInputs"][0]["apiInvocationInput"]["httpMethod"],
                             'httpStatusCode': 200,
                             'responseBody': {
                                 "TEXT": {
@@ -143,7 +143,7 @@ class BedrockAgent:
                     try:
                         logger.debug(f"Return Control Event: {json.dumps(event, indent=2)}")
                         st.session_state['returnControl'] = {
-                            'invocation_id': event["returnControl"]["invocationId"],
+                            'invocationId': event["returnControl"]["invocationId"],
                             'action_group': event["returnControl"]["invocationInputs"][0]["apiInvocationInput"]["actionGroup"]
                         }
                         return {
@@ -160,7 +160,7 @@ class BedrockAgent:
 
                 if "chunk" in event:
                     data = event["chunk"]["bytes"]
-                    response_text += data.decode("utf8")
+                    response_text = data.decode("utf8")
        
 
                 elif "trace" in event:
@@ -195,7 +195,6 @@ class BedrockAgent:
                 trace_text += f"Error during agent invocation: {str(e)}\n"
                 trace.markdown(f"Error during agent invocation: {str(e)}")
                 # Detailed logging for debugging
-                logger.debug(f"Full error details:")
                 logger.debug(f"Error type: {type(e)}")
                 logger.debug(f"Error message: {str(e)}")
                 # Log full stack trace

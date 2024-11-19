@@ -253,7 +253,7 @@ if prompt:
                     if st.button("✅ Confirm"):
                         # Call invoke_agent with confirmation
                         response_text, trace_text, files_generated = bedrock.invoke_agent(prompt, trace_placeholder, True)
-                        response_placeholder.markdown(response_text)
+                        response_placeholder.markdown(response_text,unsafe_allow_html=True)
                         st.session_state["chat_history"].append(
                             {"role": "assistant", "prompt": response_text, "trace": trace_text, "files": files_generated}
                         )
@@ -261,14 +261,14 @@ if prompt:
                     if st.button("❌ Deny"):
                         # Call invoke_agent with denial
                         response_text, trace_text, files_generated = bedrock.invoke_agent(prompt, trace_placeholder, False)
-                        response_placeholder.markdown(response_text)
+                        response_placeholder.markdown(response_text,unsafe_allow_html=True)
                         st.session_state["chat_history"].append(
                             {"role": "assistant", "prompt": response_text, "trace": trace_text, "files": files_generated}
                         )
         
             else:
                 # For non-confirmation responses, display directly
-                response_placeholder.markdown(response_text)
+                response_placeholder.markdown(response_text,unsafe_allow_html=True)
                 st.session_state["chat_history"].append(
                     {"role": "assistant", "prompt": response_text, "trace": trace_text, "files": files_generated}
                 )
