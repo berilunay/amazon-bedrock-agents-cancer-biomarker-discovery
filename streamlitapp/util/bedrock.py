@@ -185,6 +185,8 @@ class BedrockAgent:
         except Exception as e:
             trace_text += f"Error during agent invocation: {str(e)}\n"
             trace.markdown(f"Error during agent invocation: {str(e)}")
+            logger.error(f"Detailed error during agent invocation: {str(e)}")
+            logger.error(f"Error type: {type(e)}")
 
         return response_text, trace_text, files_generated
         
