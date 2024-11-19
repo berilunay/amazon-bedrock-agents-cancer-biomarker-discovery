@@ -257,6 +257,7 @@ if prompt:
                         st.session_state["chat_history"].append(
                             {"role": "assistant", "prompt": response_text, "trace": trace_text, "files": files_generated}
                         )
+                        
                 with col2:
                     if st.button("❌ Deny"):
                         # Call invoke_agent with denial
