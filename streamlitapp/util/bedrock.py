@@ -116,18 +116,20 @@ class BedrockAgent:
                     sessionId=st.session_state["SESSION_ID"],
                     enableTrace=True,
                     sessionState={
-                        'invocationId': st.session_state['pending_confirmation']['invocation_id'],
+                        'invocationId': st.session_state['returnControl']['invocation_id'],
                         'returnControlInvocationResults': [{
-                            'functionResult': {
-                                'actionGroup': st.session_state['pending_confirmation']['action_group'],
-                                'function': st.session_state['pending_confirmation']['function'],
-                                'confirmationState': 'CONFIRM' if confirmation_response else 'DENY',
-                                'responseBody': {
-                                    "TEXT": {
-                                        'body': 'all worked good'
-                                    }
+                            'apiResult': {
+                            'actionGroup': event["returnControl"]["invocationInputs"][0]["apiInvocationInput"]["actionGroup"],
+                            'apiPath': event["returnControl"]["invocationInputs"][0]["apiInvocationInput"]["apiPath"],
+                            'confirmationState': 'CONFIRM' if confirmation_response else 'DENY',
+                            'httpMethod': event["returnControl"]["invocationInputs"][0]["apiInvocationInput"]["httpMethod"],
+                            'httpStatusCode': 200,
+                            'responseBody': {
+                                "TEXT": {
+                                    'body': 'all worked good'
                                 }
                             }
+                        }
                         }]
                     }
                 )
@@ -138,16 +140,15 @@ class BedrockAgent:
                 if 'returnControl' in event:
                     logger.debug(f"Return Control Event: {json.dumps(event, indent=2)}")
                     #Store necessary information for confirmation
-                    st.session_state['pending_confirmation'] = {
+                    st.session_state['returnControl'] = {
                         'invocation_id': event["returnControl"]["invocationId"],
-                        'action_group': event["returnControl"]["invocationInputs"][0]["functionInvocationInput"]["actionGroup"],
-                        'function': event["returnControl"]["invocationInputs"][0]["functionInvocationInput"]["function"]
+                        'action_group': event["returnControl"]["invocationInputs"][0]["apiInvocationInput"]["actionGroup"]
                     }
                 
                     # Return special response for confirmation
                     return {
                         'needs_confirmation': True,
-                        'message': f"Do you want to proceed with this action?\nAction: {st.session_state['pending_confirmation']['action_group']}.{st.session_state['pending_confirmation']['function']}"
+                        'message': f"Do you want to proceed with this action?\nAction: {st.session_state['returnControl']['action_group']}"
                     }, trace_text, files_generated
 
                 if 'files' in event.keys():
