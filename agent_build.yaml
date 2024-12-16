@@ -5,7 +5,7 @@ Parameters:
   BedrockModelId:
     Type: String
     Description: The ID of the Foundation Model to use for the Agent
-    Default: anthropic.claude-3-sonnet-20240229-v1:0
+    Default: anthropic.claude-3-5-sonnet-20240620-v1:0
   EnvironmentName:
     Type: String
     Description: The name of the agent environment, used to differentiate agent application. Must be lowercase, contain one number, and be no more than 5 characters long.
@@ -1247,10 +1247,10 @@ Resources:
               - Description: "Fit a survival regression model with data in a S3 object"
                 Name: "fit_survival_regression"
                 Parameters:
-                  bucket:
-                    Type: "string"
-                    Description: "s3 bucket where the data is stored by the database query tool"
-                    Required: true
+                  #bucket:
+                  #  Type: "string"
+                  #  Description: "s3 bucket where the data is stored by the database query tool"
+                  #  Required: true
                   key:
                     Type: "string"
                     Description: "json file name that is located in the s3 bucket and contains the data for fitting the model"
@@ -1420,8 +1420,13 @@ Resources:
                   - bedrock:InvokeModel
                   - bedrock:Retrieve
                 Resource: 
-                  - !Sub arn:aws:bedrock:${AWS::Region}::foundation-model/${BedrockModelId}
+                  - !Sub arn:aws:bedrock:us-east-1::foundation-model/${BedrockModelId}
                   - !Sub arn:aws:bedrock:${AWS::Region}:${AWS::AccountId}:knowledge-base/${BedrockKnowledgeBase}
+                  - !Sub arn:aws:bedrock:us-west-2::foundation-model/${BedrockModelId}
+                  - !Sub arn:aws:bedrock:us-east-1::foundation-model/anthropic.claude-3-sonnet-20240229-v1:0
+                  - !Sub arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-sonnet-20240229-v1:0
+                  - !Sub arn:aws:bedrock:${AWS::Region}:${AWS::AccountId}:inference-profile/us.anthropic.claude-3-5-sonnet-20240620-v1:0
+                  - !Sub arn:aws:bedrock:${AWS::Region}:${AWS::AccountId}:inference-profile/us.anthropic.claude-3-sonnet-20240229-v1:0
       
   ########################
   ##### ActionGroup #####

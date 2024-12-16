@@ -71,6 +71,15 @@ class BedrockAgent:
         
         self.temp_dir = tempfile.mkdtemp()
 
+        #berils addition
+        # Get account ID and region
+        sts_client = Session().client('sts')
+        account_id = sts_client.get_caller_identity()['Account']
+        region = Session().region_name
+    
+        # Construct bucket name using same pattern as YAML
+        self.bucket_name = f"{environmentName}-{account_id}-{region}-agent-build-bucket"
+
 
     def new_session(self):
         st.session_state["SESSION_ID"] = str(uuid.uuid1())
@@ -87,7 +96,12 @@ class BedrockAgent:
                 agentId=self.agent_id,
                 agentAliasId=self.agent_alias_id,
                 sessionId=st.session_state["SESSION_ID"],
-                enableTrace=True
+                enableTrace=True,
+                sessionState={
+                    "sessionAttributes": {
+                        "bucketname": self.bucket_name
+                    }
+                }
             )
 
             for event in response["completion"]:

@@ -177,6 +177,10 @@ def lambda_handler(event, context):
     actionGroup = event['actionGroup']
     function = event['function']
     parameters = event.get('parameters', [])
+   # Retrieve agent session attributes for context 
+    session_attributes = event.get('sessionAttributes', {})
+    bucketname = session_attributes.get('bucketname')
+
     try:
         if function == "plot_kaplan_meier":
             for param in parameters:
@@ -228,18 +232,18 @@ def lambda_handler(event, context):
         }
     
     if function == "fit_survival_regression":
-        bucket = ''
-        key = ''
+        #bucket = ''
+        #key = ''
         s3 = boto3.client('s3')
         for param in parameters:
-            if param["name"] == "bucket":
-                bucket = param["value"]
-                print(bucket)
+        #    if param["name"] == "bucket":
+        #        bucket = param["value"]
+        #        print(bucket)
             if param["name"] == "key":
                 key = param["value"]
                 print(key)
         try:
-            obj = s3.get_object(Bucket=bucket, Key=key)
+            obj = s3.get_object(Bucket=bucketname, Key=key)
             data = json.loads(obj['Body'].read().decode('utf-8'))
             summary = fit_survival_regression_model(data)
             responseBody = {
