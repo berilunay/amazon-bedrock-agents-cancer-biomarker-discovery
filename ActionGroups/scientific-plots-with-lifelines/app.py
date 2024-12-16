@@ -179,6 +179,7 @@ def lambda_handler(event, context):
     parameters = event.get('parameters', [])
    # Retrieve agent session attributes for context 
     session_attributes = event.get('sessionAttributes', {})
+    print('session_attributes:', session_attributes)
     bucketname = session_attributes.get('bucketname','')
     print('bucketname:',bucketname)
 
