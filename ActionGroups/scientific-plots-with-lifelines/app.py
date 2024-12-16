@@ -179,7 +179,8 @@ def lambda_handler(event, context):
     parameters = event.get('parameters', [])
    # Retrieve agent session attributes for context 
     session_attributes = event.get('sessionAttributes', {})
-    bucketname = session_attributes.get('bucketname')
+    bucketname = session_attributes.get('bucketname','')
+    print('bucketname:',bucketname)
 
     try:
         if function == "plot_kaplan_meier":
@@ -269,7 +270,14 @@ def lambda_handler(event, context):
 
     }
 
-    dummy_function_response = {'response': action_response, 'messageVersion': event['messageVersion']}
+    dummy_function_response = {
+        'response': action_response, 
+        'messageVersion': event['messageVersion'],
+        'sessionState': {
+                        'sessionAttributes': session_attributes
+                        }
+        
+        }
     print("Response: {}".format(dummy_function_response))
 
     return dummy_function_response
