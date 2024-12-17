@@ -72,12 +72,11 @@ class BedrockAgent:
         self.temp_dir = tempfile.mkdtemp()
 
         
-
-
     def new_session(self):
         st.session_state["SESSION_ID"] = str(uuid.uuid1())
 
     def invoke_agent(self, input_text, trace):
+        print("Bucket name being passed:", self.s3_bucket_name)
         response_text = ""
         trace_text = ""
         step = 0
@@ -92,7 +91,7 @@ class BedrockAgent:
                 enableTrace=True,
                 sessionState={
                     "sessionAttributes": {
-                        "bucketname": 'testbucket'
+                        "bucketname": self.s3_bucket_name
                     }
                 }
             )
