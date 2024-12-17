@@ -92,7 +92,7 @@ class BedrockAgent:
                 enableTrace=True,
                 sessionState={
                     "sessionAttributes": {
-                        "bucketname": self.s3_bucket_name
+                        "bucketname": 'testbucket'
                     }
                 }
             )
