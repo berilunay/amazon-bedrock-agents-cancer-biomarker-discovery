@@ -87,7 +87,7 @@ class BedrockAgent:
     def invoke_agent(self, input_text, trace):
         print("Bucket name being passed:", self.s3_bucket_name)
         logger.info(f"Bucket name being passed: {self.s3_bucket_name}")
-        logger.infop('sessionid',st.session_state["SESSION_ID"])
+        logger.info('sessionid',st.session_state["SESSION_ID"])
 
         response_text = ""
         trace_text = ""
@@ -101,11 +101,7 @@ class BedrockAgent:
                 agentAliasId=self.agent_alias_id,
                 sessionId=st.session_state["SESSION_ID"],
                 enableTrace=True,
-                sessionState={
-                    "sessionAttributes": {
-                        "bucketname": self.s3_bucket_name
-                    }
-                }
+                sessionState={"sessionAttributes": {"bucketname": self.s3_bucket_name}}
             )
 
             for event in response["completion"]:
