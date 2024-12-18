@@ -8,16 +8,7 @@ import tempfile
 import shutil
 from io import BytesIO
 from PIL import Image
-import logging
-import sys
 
-# Set up logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[logging.StreamHandler(sys.stdout)]
-)
-logger = logging.getLogger(__name__)
 
 class BedrockAgent:
     """BedrockAgent class for invoking an Anthropic AI agent.
@@ -87,9 +78,7 @@ class BedrockAgent:
 
     def invoke_agent(self, input_text, trace):
         print("Bucket name being passed:", self.s3_bucket_name)
-        logger.info(f"Bucket name being passed: {self.s3_bucket_name}")
-        logger.info('sessionid',st.session_state["SESSION_ID"])
-
+        
         response_text = ""
         trace_text = ""
         step = 0
