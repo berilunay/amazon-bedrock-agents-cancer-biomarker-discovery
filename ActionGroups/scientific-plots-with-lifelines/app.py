@@ -10,6 +10,9 @@ import os
 import pandas as pd
 from lifelines import CoxPHFitter
 import numpy as np
+
+
+
   
 def process_clinical_genomic_data(data):
     try:
@@ -177,14 +180,10 @@ def lambda_handler(event, context):
     actionGroup = event['actionGroup']
     function = event['function']
     parameters = event.get('parameters', [])
-   # Retrieve agent session attributes for context 
-    print('event',json.dumps(event, indent=2,default=str))
-    
     session_attributes = event.get('sessionAttributes', {})
     print('session_attributes:', session_attributes)
     bucketname = session_attributes.get('bucketname','')
-    print('bucketname:',bucketname)
-
+    
     try:
         if function == "plot_kaplan_meier":
             for param in parameters:
@@ -236,13 +235,8 @@ def lambda_handler(event, context):
         }
     
     if function == "fit_survival_regression":
-        #bucket = ''
-        #key = ''
         s3 = boto3.client('s3')
         for param in parameters:
-        #    if param["name"] == "bucket":
-        #        bucket = param["value"]
-        #        print(bucket)
             if param["name"] == "key":
                 key = param["value"]
                 print(key)

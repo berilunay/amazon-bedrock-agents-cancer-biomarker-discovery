@@ -77,8 +77,6 @@ class BedrockAgent:
         st.session_state["SESSION_ID"] = str(uuid.uuid1())
 
     def invoke_agent(self, input_text, trace):
-        print("Bucket name being passed:", self.s3_bucket_name)
-        
         response_text = ""
         trace_text = ""
         step = 0
