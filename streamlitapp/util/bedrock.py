@@ -9,6 +9,7 @@ import shutil
 from io import BytesIO
 from PIL import Image
 import logging
+import sys
 
 # Set up logging
 logging.basicConfig(
