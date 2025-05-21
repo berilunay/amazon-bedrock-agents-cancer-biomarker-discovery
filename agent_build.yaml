@@ -38,7 +38,7 @@ Parameters:
   GitBranch:
     Type: String
     Description: The github branch to clone
-    Default: main
+    Default: hcls-agents-workshop
   SubAgentS3Bucket:
     Type: String
     Description: 'The S3 bucket containing the Subagents'

@@ -37,7 +37,7 @@ Parameters:
   GitBranch:
     Type: String
     Description: 'The github branch to clone, change only for dev testing'
-    Default: 'main'
+    Default: 'hcls-agents-workshop'
 
 Mappings:
   # Cloudfront Mappings
