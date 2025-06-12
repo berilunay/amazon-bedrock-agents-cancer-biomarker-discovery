@@ -354,7 +354,7 @@ Resources:
                 - mkdir -p python/lib/python3.11/site-packages
                 - pip install --no-cache-dir -r lambdalayers/requirements.txt -t python/lib/python3.11/site-packages
                 - cd python
-                - zip -r9 ../lambda-layer.zip .
+                - zip -r9 ../lambda-layer.zip python
                 - cd ..
                 - aws s3 cp lambda-layer.zip s3://${S3Bucket}/lambda-layer.zip
       TimeoutInMinutes: 10
