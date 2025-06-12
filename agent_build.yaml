@@ -351,9 +351,10 @@ Resources:
                 - echo "Build phase completed"
                 - echo "lambda layer preperation phase starts"
                 - cd repo
-                - mkdir -p python
-                - pip install -r lambdalayers/requirements.txt -t python --no-cache-dir
-                - zip -r9 lambda-layer.zip python/
+                - mkdir -p python/lib/python3.11/site-packages
+                - pip install -r lambdalayers/requirements.txt -t python/lib/python3.11/site-packages --no-cache-dir
+                - cd python
+                - zip -r9 ../lambda-layer.zip .
                 - cp lambda-layer.zip ../
                 - cd ..
                 - aws s3 cp lambda-layer.zip s3://${S3Bucket}/lambda-layer.zip
