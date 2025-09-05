@@ -28,7 +28,7 @@ Parameters:
   GithubLink:
    Type: String
    Description: 'The link to the agent build cloudformation stack'
-   Default: 'https://github.com/aws-samples/amazon-bedrock-agents-cancer-biomarker-discovery.git'
+   Default: 'https://github.com/berilunay/amazon-bedrock-agents-cancer-biomarker-discovery.git'
   ImageTag:
     Type: String
     Default: latest
@@ -42,7 +42,7 @@ Parameters:
   GitBranch:
     Type: String
     Description: The github branch to clone 
-    Default: hcls-agents-workshop
+    Default: streamlitagentcorebranch
 
 
 Mappings:
@@ -1176,6 +1176,22 @@ Resources:
         ImageTag: !Ref ImageTag
         GitBranch: !Ref GitBranch
       TimeoutInMinutes: 35
+
+  StreamlitBuildNestedStackAgentCore:
+    Type: AWS::CloudFormation::Stack
+    DependsOn: StreamlitBuildNestedStack
+    Properties:
+      TemplateURL: !Sub 'https://raw.githubusercontent.com/${GitRepoURL}/streamlitapp-agentcore/packaged_streamlit_build_agentcore.yaml'
+      Parameters:
+        SharedVPCId: !GetAtt StreamlitBuildNestedStack.Outputs.VPCId
+        SharedInternetGatewayId: !GetAtt StreamlitBuildNestedStack.Outputs.InternetGatewayId
+        SharedPublicRouteTableId: !GetAtt StreamlitBuildNestedStack.Outputs.PublicRouteTableId
+        EnvironmentName: !Ref EnvironmentName
+        GitRepoURL: !Ref GithubLink
+        GitBranch: !Ref GitBranch
+        ImageTag: !Ref ImageTag
+      TimeoutInMinutes: 35
+
 Outputs:
   RedshiftClusterEndpoint:
     Description: Redshift Cluster Endpoint
