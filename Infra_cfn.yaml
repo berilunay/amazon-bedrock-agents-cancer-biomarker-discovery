@@ -1181,7 +1181,7 @@ Resources:
     Type: AWS::CloudFormation::Stack
     DependsOn: StreamlitBuildNestedStack
     Properties:
-      TemplateURL: !Sub 'https://${S3Bucket}.s3.${AWS::Region}.amazonaws.com/packaged_streamlit_build_agentcore.yaml'
+      TemplateURL: !Sub https://${S3Bucket}.s3.${AWS::Region}.amazonaws.com/packaged_streamlit_build_agentcore.yaml
       Parameters:
         SharedVPCId: !GetAtt StreamlitBuildNestedStack.Outputs.VPCId
         SharedInternetGatewayId: !GetAtt StreamlitBuildNestedStack.Outputs.InternetGatewayId
