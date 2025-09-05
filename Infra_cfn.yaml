@@ -1191,6 +1191,7 @@ Resources:
         GitBranch: !Ref GitBranch
         ImageTag: !Ref ImageTag
       TimeoutInMinutes: 35
+      
 
 Outputs:
   RedshiftClusterEndpoint:
