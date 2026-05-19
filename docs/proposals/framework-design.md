@@ -103,7 +103,7 @@ The [AWS Agent Toolkit](https://github.com/aws/agent-toolkit-for-aws) provides g
 1. Install HCLS plugin → domain skills and HCLS-specific MCP servers load into their assistant
 2. Optionally install AWS Agent Toolkit → generic infra skills load alongside
 3. Both work independently; together they cover the full build-and-deploy workflow
-4. HCLS skills and MCP servers are usable in Claude Code, Kiro, Q Desktop, Co-work without deploying any agent — they work standalone
+4. HCLS skills and MCP servers are usable in Claude Code, Kiro, Amazon Quick, Co-work without deploying any agent — they work standalone
 
 ---
 
@@ -137,7 +137,7 @@ Skills are consumed by:
 - Claude Code (via plugin install → loads SKILL.md)
 - Kiro (adapted to POWER.md + steering/ format in platforms/kiro/)
 - Codex (via .codex-plugin → skills path)
-- Q Desktop (copied to ~/.quickwork/skills/)
+- Amazon Quick (copied to ~/.quickwork/skills/)
 - Production agents (via Strands AgentSkills at runtime)
 - AgentCore Registry (registered as AGENT_SKILLS records)
 
@@ -163,7 +163,7 @@ Follows the pattern from `sample-healthomics-agentic-setup`:
 
 ### agents_catalog/ — "Production products"
 
-Unchanged. The 36+ production agents remain the core offering. The framework layers above make these agents:
+Unchanged. The 36+ reference agents remain the core offering. The framework layers above make these agents:
 - **Discoverable** — skills describe what they do and when to use them
 - **Accessible** — MCP servers expose their tools to any client
 - **Composable** — Registry records enable dynamic multi-agent orchestration
@@ -180,7 +180,7 @@ Developer installs plugin
   → Developer builds a new HCLS agent guided by skills, using MCP tools
   → Deploys to AgentCore (becomes a new catalog agent)
 
-Researcher connects MCP servers to Q Desktop
+Researcher connects MCP servers to Amazon Quick
   → Gets 30+ biomedical database tools via natural language
   → Skills guide complex multi-step workflows
   → No agent deployment needed
@@ -381,7 +381,7 @@ platforms/codex/
 
 Installed via: `codex plugin marketplace add aws-samples/amazon-bedrock-agents-healthcare-lifesciences`
 
-### Q Desktop (`platforms/q-desktop/`)
+### Amazon Quick (`platforms/q-desktop/`)
 
 ```
 platforms/q-desktop/
@@ -396,7 +396,7 @@ Installed via: Copy skills to `~/.quickwork/skills/`, add MCP servers in Setting
 ### Interactive Setup (`platforms/setup.sh`)
 
 Interactive installer following the HealthOmics agentic-setup pattern:
-1. Asks which platform (Claude Code, Kiro, Codex, Q Desktop, Cursor)
+1. Asks which platform (Claude Code, Kiro, Codex, Amazon Quick, Cursor)
 2. Asks global vs. project-level install
 3. Copies appropriate configs to the right locations
 4. Configures MCP servers
@@ -414,7 +414,7 @@ Interactive installer following the HealthOmics agentic-setup pattern:
   "owner": { "name": "Amazon Web Services" },
   "metadata": {
     "version": "1.0.0",
-    "description": "Healthcare and Life Sciences domain capabilities for AI coding assistants — skills, MCP tools, and production agent patterns for genomics, drug discovery, clinical trials, and more."
+    "description": "Healthcare and Life Sciences domain capabilities for AI coding assistants — skills, MCP tools, and reference agent patterns for genomics, drug discovery, clinical trials, and more."
   },
   "plugins": [
     {
@@ -474,7 +474,7 @@ This plan aligns with the phased roadmap in `repository-transformation-roadmap.m
 | Plugin definition (`plugins/hcls-agents/`) | Done | Both manifest formats |
 | MCP server configs — AWS public (5 servers) | Done | .mcp.json files |
 | MCP server configs — third-party (15 servers) | Done | .mcp.json files |
-| Platform adapters (Claude Code, Kiro, Codex, Q Desktop) | Done | Configs + READMEs |
+| Platform adapters (Claude Code, Kiro, Codex, Amazon Quick) | Done | Configs + READMEs |
 | Interactive setup.sh | Done | Multi-platform installer |
 | Builder skills (3): get-started, build-agent, deploy-agent | Done | SKILL.md with content |
 | Validation script | Done | `tools/validate.py` |
@@ -493,8 +493,8 @@ This plan aligns with the phased roadmap in `repository-transformation-roadmap.m
 | Write clinical trials skills (trial-search, protocol-generation, enrollment) | 1 week | None — can reference agents 15, 16, 27 |
 | Test plugin install in Claude Code | 2 days | Phase 1 complete |
 | Test Kiro power configuration | 2 days | Phase 1 complete |
-| Test Q Desktop skill loading + MCP server connections | 2 days | Phase 1 complete |
-| Document end-to-end demo: researcher using Q Desktop + MCP servers | 3 days | MCP servers configured |
+| Test Amazon Quick skill loading + MCP server connections | 2 days | Phase 1 complete |
+| Document end-to-end demo: researcher using Amazon Quick + MCP servers | 3 days | MCP servers configured |
 | Document end-to-end demo: developer using Claude Code + skills to build agent | 3 days | Skills written |
 
 **Parallel migration dependency:** As agents complete v1→v2 migration, their domain knowledge should be captured in skills. Each migrated agent gets ~1 extra day of work to produce a SKILL.md + registry record.
@@ -563,13 +563,13 @@ All platforms listed below consume the same skills and MCP servers — the frame
 | **Claude Code** | AI coding assistant | Via plugin install | Via .mcp.json | Phase 1 ready |
 | **Kiro** | AI coding assistant | Via POWER.md + steering/ | Via mcp.json | Phase 1 ready |
 | **Codex** | AI coding assistant | Via .codex-plugin | Via config.toml | Phase 1 ready |
-| **Amazon Q Desktop** | End-user platform | Via ~/.quickwork/skills/ | Via Settings → Capabilities | Phase 1 ready |
+| **Amazon Amazon Quick** | End-user platform | Via ~/.quickwork/skills/ | Via Settings → Capabilities | Phase 1 ready |
 | **Claude Co-work** | End-user platform | Via skill loading | Via app UI | Phase 2 (testing) |
 | **Cursor / VS Code** | IDE extension | Via .cursor/skills/ | Via .cursor/mcp.json | Phase 1 ready (uses Claude Code config) |
 | **Production Agents** | AgentCore Runtime | Via Strands AgentSkills | Via Gateway/Runtime | Phase 3-4 |
 | **AgentCore Registry** | Discovery service | As AGENT_SKILLS records | As MCP records | Phase 4 |
 
-**Amazon Q Desktop** is a key consumer platform: non-technical researchers and clinicians connect Q Desktop to deployed HCLS MCP servers (Biomni Gateway, OLS) and load domain skills — executing genomics, drug discovery, and clinical workflows through natural language without deploying any agents themselves.
+**Amazon Amazon Quick** is a key consumer platform: non-technical researchers and clinicians connect Amazon Quick to deployed HCLS MCP servers (Biomni Gateway, OLS) and load domain skills — executing genomics, drug discovery, and clinical workflows through natural language without deploying any agents themselves.
 
 ---
 

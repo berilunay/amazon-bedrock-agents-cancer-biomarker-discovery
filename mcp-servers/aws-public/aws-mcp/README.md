@@ -22,19 +22,14 @@ Local stdio proxy to the AWS MCP server providing authenticated access to 300+ A
 
 ## Capabilities
 
-- `search_documentation` — search AWS docs (no auth required)
-- `retrieve_skill` — discover and load AWS skills on demand
-- `call_aws` — authenticated access to 300+ AWS services (IAM, S3, Lambda, Athena, etc.)
-- `run_script` — sandboxed Python script execution
+- `search_documentation` -- search AWS docs (no auth required)
+- `retrieve_skill` -- discover and load AWS skills on demand
+- `call_aws` -- authenticated access to 300+ AWS services
+- `run_script` -- sandboxed Python script execution
 
-## When HCLS Skills Use This
+## HCLS Use Cases
 
-HCLS domain skills reference this MCP server when they need AWS infrastructure actions:
-- Deploy CloudFormation stacks for agent infrastructure
-- Create/invoke Lambda functions for tool handlers
-- Query Athena for data processing
-- Manage S3 buckets for data storage
-- Configure IAM roles for agent permissions
+Deploy CloudFormation stacks, create/invoke Lambda functions, query Athena, manage S3 buckets, and configure IAM roles for agent infrastructure.
 
 ## Source
 

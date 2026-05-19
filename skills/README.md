@@ -92,6 +92,6 @@ skills/<skill-name>/
 | Claude Code | Loaded via plugin install, referenced in context |
 | Kiro | Adapted to POWER.md + steering/ format |
 | Codex | Loaded via .codex-plugin skills path |
-| Q Desktop | Copied to ~/.quickwork/skills/ |
-| Production agents | Loaded via Strands AgentSkills at runtime |
+| Amazon Quick | Copied to ~/.quickwork/skills/ |
+| Strands agents | Loaded via AgentSkills at runtime |
 | AgentCore Registry | Registered as AGENT_SKILLS records for dynamic discovery |

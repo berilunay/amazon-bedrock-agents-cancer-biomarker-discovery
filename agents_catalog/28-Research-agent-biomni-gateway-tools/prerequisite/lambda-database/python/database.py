@@ -45,7 +45,6 @@ def invoke_bedrock_model(
     user_message,
     max_tokens=2000,
     temperature=0,
-    top_p=0.9,
 ):
     """Invoke Bedrock model using Converse API."""
     try:
@@ -56,7 +55,6 @@ def invoke_bedrock_model(
             inferenceConfig={
                 "temperature": temperature,
                 "maxTokens": max_tokens,
-                "topP": top_p,
             },
         )
         print("response is")
@@ -98,7 +96,7 @@ def _query_llm_for_api(
         # Format the system prompt with the schema
         if schema is not None:
             schema_json = json.dumps(schema, indent=2)
-            system_prompt = system_template.format(schema=schema_json)
+            system_prompt = system_template.replace("{schema}", schema_json)
         else:
             system_prompt = system_template
 

@@ -2,9 +2,9 @@
 
 ## The Bigger "Why"
 
-The market is shifting. Customers are asking: **"Are you building industry-specific modules for Amazon Q Desktop?"** and expecting AI-powered domain solutions that non-technical users can access without deploying infrastructure.
+The market is shifting. Customers are asking: **"Are you building industry-specific modules for Amazon Quick?"** and expecting AI-powered domain solutions that non-technical users can access without deploying infrastructure.
 
-Simultaneously, the AI coding assistant landscape (Claude Code, Kiro, Codex, Cursor) is converging on a standard extensibility model: **skills (knowledge) + MCP servers (actions) + plugins (packaging)**. This model is now shared — with variations in format — across developer tools AND end-user platforms (Claude Co-work, Amazon Q Desktop).
+Simultaneously, the AI coding assistant landscape (Claude Code, Kiro, Codex, Cursor) is converging on a standard extensibility model: **skills (knowledge) + MCP servers (actions) + plugins (packaging)**. This model is now shared — with variations in format — across developer tools AND end-user platforms (Claude Co-work, Amazon Quick).
 
 The HCLS Agents Toolkit has a catalog of 36+ production-ready agents, but they're currently **only accessible as deployed runtimes**. A researcher can't use them without an AWS deployment. A developer can't discover them without reading READMEs. A clinician can't reach them without a custom UI.
 
@@ -40,7 +40,7 @@ The HCLS Agents Toolkit has a catalog of 36+ production-ready agents, but they'r
 
 **Decision:** Skills + MCP servers serve exploration and development. Deployed catalog agents serve production. Same capabilities, different packaging for different contexts.
 
-**Why:** A researcher exploring "what biomarkers exist for NSCLC" doesn't need a deployed agent — they need a Q Desktop session connected to the Biomni Gateway. But a hospital system running clinical decision support for 10,000 patients/day needs a production agent with guardrails, audit logs, and SLAs.
+**Why:** A researcher exploring "what biomarkers exist for NSCLC" doesn't need a deployed agent — they need a Amazon Quick session connected to the Biomni Gateway. But a hospital system running clinical decision support for 10,000 patients/day needs a production agent with guardrails, audit logs, and SLAs.
 
 ---
 
@@ -53,7 +53,7 @@ The HCLS Agents Toolkit has a catalog of 36+ production-ready agents, but they'r
 
 **Decision:** **Option A for short term, converging toward C long term.** The current architecture already supports this — AgentCore Gateway IS an MCP server. Agent 28 already demonstrates this pattern.
 
-**Why:** Agent 28's Biomni Gateway is already an MCP endpoint. Any MCP client (Q Desktop, Co-work, another agent) can connect to it. We don't need to build separate MCP servers — the deployed Gateway tools ARE the MCP tools. The "thin proxy" is already built into AgentCore.
+**Why:** Agent 28's Biomni Gateway is already an MCP endpoint. Any MCP client (Amazon Quick, Co-work, another agent) can connect to it. We don't need to build separate MCP servers — the deployed Gateway tools ARE the MCP tools. The "thin proxy" is already built into AgentCore.
 
 ---
 
@@ -73,7 +73,7 @@ The HCLS Agents Toolkit has a catalog of 36+ production-ready agents, but they'r
 |---------|-------------|-------------|--------------|
 | Claude Code | `.claude-plugin/` + SKILL.md | `.mcp.json` (stdio) | Git marketplace |
 | Claude Co-work | SKILL.md with frontmatter | App UI config (stdio + HTTP) | Plugin registry |
-| Amazon Q Desktop | SKILL.md in `~/.quickwork/skills/` | Settings → Capabilities (stdio + SSE) | Manual file + server |
+| Amazon Quick | SKILL.md in `~/.quickwork/skills/` | Settings → Capabilities (stdio + SSE) | Manual file + server |
 | Kiro | POWER.md + steering/ | `mcp.json` in power dir | Local path |
 | Codex | `.codex-plugin/` + SKILL.md | Similar to Claude Code | Git-based |
 
@@ -83,17 +83,17 @@ The HCLS Agents Toolkit has a catalog of 36+ production-ready agents, but they'r
 
 ---
 
-### Q6: What about non-technical users accessing HCLS workflows through Q Desktop / Co-work?
+### Q6: What about non-technical users accessing HCLS workflows through Amazon Quick / Co-work?
 
 **Key insight from platform research:**
-- Both Q Desktop and Co-work support MCP servers
+- Both Amazon Quick and Co-work support MCP servers
 - Both support SKILL.md-style workflow guidance
 - Neither has enterprise admin-push (yet)
 - Both expose custom tools to users via natural language — no coding required
 
 **Decision:** The HCLS Toolkit should produce MCP-accessible domain tools (deployed to AgentCore) that end-user platforms can connect to directly. This answers the market question about "industry-specific modules."
 
-**Why:** A researcher in Q Desktop who connects to the HCLS Biomni Gateway gets 30+ biomedical database tools accessible via natural language. No agent deployment needed on their end. The Gateway IS the industry module.
+**Why:** A researcher in Amazon Quick who connects to the HCLS Biomni Gateway gets 30+ biomedical database tools accessible via natural language. No agent deployment needed on their end. The Gateway IS the industry module.
 
 ---
 
@@ -141,7 +141,7 @@ The plugin references the catalog but doesn't duplicate it. The catalog benefits
 - Each catalog agent registers in the HCLS Registry on deployment
 - New agents become instantly available to workflows without redeploying the orchestrator
 - Complex HCLS workflows (biomarker discovery, patient genomic analysis, drug research pipelines) compose dynamically from registered agents
-- End-user platforms (Q Desktop, Co-work) could also search the Registry to discover available HCLS capabilities
+- End-user platforms (Amazon Quick, Co-work) could also search the Registry to discover available HCLS capabilities
 
 **The architectural progression:** Static supervisor (today) → Registry-discovered dynamic orchestration (target). Both coexist — static for deterministic pipelines, dynamic for exploratory workflows.
 
@@ -183,4 +183,4 @@ And the AgentCore Registry samples demonstrate the orchestration pattern:
 
 ## The One-Line Pitch
 
-> The HCLS Agents Toolkit becomes a library of healthcare domain capabilities — deployable as production agents, consumable as developer skills, and connectable as MCP tools — serving builders in their IDEs, researchers in Q Desktop, and clinicians through production applications.
+> The HCLS Agents Toolkit becomes a library of healthcare domain capabilities — deployable as reference agents, consumable as developer skills, and connectable as MCP tools — serving builders in their IDEs, researchers in Amazon Quick, and clinicians through production applications.

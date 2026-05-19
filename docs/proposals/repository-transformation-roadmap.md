@@ -2,7 +2,7 @@
 
 ## Context
 
-This document proposes changes to transform the HCLS Agents Toolkit repository from a collection of standalone agents into a composable platform where domain capabilities are expressed as portable skills, MCP tools, and production-ready agents. These changes complement the ongoing parallel effort to migrate legacy Bedrock agents (v1 CloudFormation/Lambda pattern) to AgentCore with the Strands framework.
+This document proposes changes to transform the HCLS Agents Toolkit repository from a collection of standalone agents into a composable platform where domain capabilities are expressed as portable skills, MCP tools, and reference implementations. These changes complement the ongoing parallel effort to migrate legacy Bedrock agents (v1 CloudFormation/Lambda pattern) to AgentCore with the Strands framework.
 
 ---
 
@@ -28,7 +28,7 @@ This document proposes changes to transform the HCLS Agents Toolkit repository f
 | **`agentcore_template/`** (this repo) | Backend-only: AgentCore Runtime + Gateway + Memory + Streamlit dev UI | Rapid prototyping, backend development, or BYO frontend |
 | **[FAST](https://github.com/awslabs/fullstack-solution-template-for-agentcore)** (external) | Full-stack: React/Amplify frontend + Cognito + AgentCore backend + CDK | Production deployments needing a complete, secured web application |
 
-Agent 35 (Terminology) demonstrates the FAST pattern: fork FAST, add domain-specific tools (OLS MCP server), customize the agent and frontend — production-ready full-stack deployment with minimal effort. This is the recommended approach for production catalog agents going forward.
+Agent 35 (Terminology) demonstrates the FAST pattern: fork FAST, add domain-specific tools (OLS MCP server), customize the agent and frontend — production-ready full-stack deployment with minimal effort. This is the recommended approach for taking catalog agents to production going forward.
 
 ### Ongoing parallel work
 
@@ -38,7 +38,7 @@ The v1-to-v2 migration project is converting legacy CloudFormation/Lambda agents
 
 ## Architectural Principles
 
-1. **MCP servers are the universal tool primitive** — deploy once to AgentCore, consumable by any MCP client (IDE, Co-work, Q Desktop, other agents)
+1. **MCP servers are the universal tool primitive** — deploy once to AgentCore, consumable by any MCP client (IDE, Co-work, Amazon Quick, other agents)
 2. **Skills are portable knowledge** — SKILL.md content is the source of truth, packaged per-surface with thin adapters
 3. **Catalog agents are assembled products** — compose skills + MCP tools + guardrails + system prompt into production runtimes
 4. **No duplication** — tools live in one place (MCP server); skills live in one place (SKILL.md); agents reference both
@@ -153,7 +153,7 @@ The HCLS plugin does NOT duplicate what the AWS Agent Toolkit already provides �
 
 A README documenting:
 - How to install both the AWS Agent Toolkit and HCLS plugin together
-- How to configure MCP servers in Co-work and Q Desktop
+- How to configure MCP servers in Co-work and Amazon Quick
 - Which catalog agents are directly accessible as MCP endpoints
 - Workflow examples showing both plugins working together (e.g., "use aws-agents to deploy, hcls-agents to customize for genomics")
 
@@ -180,7 +180,7 @@ None. This phase uses existing content and deployed infrastructure.
 
 ## Medium Term (2-3 months): Domain Skills + MCP Tools
 
-**Goal:** Build HCLS-specific skills with real workflow guidance and demonstrate end-user platform consumption (Q Desktop, Co-work connecting to deployed HCLS tools).
+**Goal:** Build HCLS-specific skills with real workflow guidance and demonstrate end-user platform consumption (Amazon Quick, Co-work connecting to deployed HCLS tools).
 
 ### Deliverables
 
@@ -220,7 +220,7 @@ For agents completing v2 migration during this phase, ensure their Gateway tools
 #### 3. End-user platform demonstrations
 
 Create documentation and demo configs showing:
-- **Q Desktop:** Connect to deployed HCLS Gateway → execute research queries
+- **Amazon Quick:** Connect to deployed HCLS Gateway → execute research queries
 - **Claude Co-work:** Load HCLS skills + connect MCP → run clinical workflows
 - **Video/walkthrough:** Non-technical user performing HCLS workflow through natural language
 
@@ -240,9 +240,9 @@ build-skills.sh                 ← generates:
   → powers/ steering files      (Kiro format)
 ```
 
-#### 5. Co-work / Q Desktop SKILL.md format
+#### 5. Co-work / Amazon Quick SKILL.md format
 
-Ensure skills are compatible with both Co-work and Q Desktop's SKILL.md format (YAML frontmatter + markdown body with triggers/descriptions).
+Ensure skills are compatible with both Co-work and Amazon Quick's SKILL.md format (YAML frontmatter + markdown body with triggers/descriptions).
 
 ### Effort estimate
 
@@ -366,7 +366,7 @@ hcls-cancer-biomarker-discovery/SKILL.md
 
 #### 5. Enterprise distribution readiness
 
-Prepare for future admin-push capabilities (currently not available in Co-work or Q Desktop):
+Prepare for future admin-push capabilities (currently not available in Co-work or Amazon Quick):
 - Modular packaging: each HCLS domain is independently installable
 - Configuration templates for org-wide MCP server connection
 - Guardrail configs exportable as Cedar policies
@@ -462,7 +462,7 @@ Community contribution (contributions/)
 
 **Immediate call to action (post-exec approval):**
 
-> The HCLS Agents Toolkit is now open for community contributions. If you're building skills, scripts, MCP tools, or agents for healthcare and life sciences workflows — contribute them here. Your work becomes instantly available to developers in their IDEs, researchers in Q Desktop, and production applications via AgentCore. Start with a skill (just a SKILL.md file) or a standalone script — no infrastructure required.
+> The HCLS Agents Toolkit is now open for community contributions. If you're building skills, scripts, MCP tools, or agents for healthcare and life sciences workflows — contribute them here. Your work becomes instantly available to developers in their IDEs, researchers in Amazon Quick, and production applications via AgentCore. Start with a skill (just a SKILL.md file) or a standalone script — no infrastructure required.
 
 > We're specifically looking for contributions in: genomics/variant analysis, clinical trial workflows, drug discovery pipelines, regulatory/compliance automation, lab data standardization, medical terminology, and real-world evidence generation.
 
@@ -617,7 +617,7 @@ Add to your `.mcp.json`:
 }
 \```
 
-**For Amazon Q Desktop / Claude Co-work:**
+**For Amazon Amazon Quick / Claude Co-work:**
 Settings → Capabilities → Add MCP → paste the URL above
 ```
 
@@ -653,7 +653,7 @@ Settings → Capabilities → Add MCP → paste the URL above
 | Short term | Plugin installable and functional in Claude Code + Kiro | Both tested, documented |
 | Short term | Builder scaffolds + deploys an HCLS agent using skills (timed) | Under 30 min from clone to deployed agent |
 | Short term | Internal builders actively using the plugin | 10+ within 6 weeks |
-| Medium term | Non-technical user executes HCLS workflow via Q Desktop/Co-work | 3+ recorded demos with distinct personas |
+| Medium term | Non-technical user executes HCLS workflow via Amazon Quick/Co-work | 3+ recorded demos with distinct personas |
 | Medium term | Domain skills cover major HCLS verticals | 5-8 skills, each validated by domain expert |
 | Medium term | Design partner feedback collected | 2-3 customers test and provide feedback |
 | Long term | Catalog agents registered in HCLS AgentCore Registry | 100% of v2 agents |

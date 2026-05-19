@@ -4,13 +4,13 @@ Existing AWS-published MCP servers that HCLS skills reference for infrastructure
 
 ## Available Servers
 
-| Server | Transport | What it provides |
-|--------|-----------|------------------|
-| [aws-healthomics](aws-healthomics/) | stdio (local) | 60+ HealthOmics workflow/run/store management tools |
-| [aws-knowledge](aws-knowledge/) | HTTP (remote) | AWS documentation search and architecture guidance |
-| [agentcore-docs](agentcore-docs/) | stdio (local) | AgentCore API reference and documentation |
-| [strands-docs](strands-docs/) | stdio (local) | Strands Agents SDK documentation |
-| [aws-mcp](aws-mcp/) | stdio (local) | 300+ AWS service operations (IAM, S3, Lambda, Athena, etc.) |
+| Server | Transport | AWS Creds | What it provides |
+|--------|-----------|-----------|------------------|
+| [aws-healthomics](aws-healthomics/) | stdio (local) | Required | 60+ HealthOmics workflow/run/store management tools |
+| [aws-knowledge](aws-knowledge/) | HTTP (remote) | None | AWS documentation search and architecture guidance |
+| [agentcore-docs](agentcore-docs/) | stdio (local) | None | AgentCore API reference and documentation |
+| [strands-docs](strands-docs/) | stdio (local) | None | Strands Agents SDK documentation |
+| [aws-mcp](aws-mcp/) | stdio (local) | Required | 300+ AWS service operations (IAM, S3, Lambda, Athena, etc.) |
 
 ## Prerequisites
 

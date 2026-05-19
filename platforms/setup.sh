@@ -18,7 +18,7 @@ echo ""
 echo "  1) Claude Code"
 echo "  2) Kiro"
 echo "  3) Codex"
-echo "  4) Amazon Q Desktop"
+echo "  4) Amazon Quick"
 echo "  5) Cursor"
 echo ""
 read -p "Select (1-5): " PLATFORM
@@ -82,13 +82,13 @@ case $PLATFORM in
       echo "  Copied Codex config to ~/.codex/"
     fi
     ;;
-  4) # Q Desktop
+  4) # Amazon Quick
     mkdir -p ~/.quickwork/skills
     cp -r "$SCRIPT_DIR/q-desktop/skills/"* ~/.quickwork/skills/ 2>/dev/null || true
     echo "  Copied skills to ~/.quickwork/skills/"
     echo ""
     echo "  MCP servers must be added manually:"
-    echo "  Open Q Desktop → Settings → Capabilities → Add MCP Server"
+    echo "  Open Amazon Quick → Settings → Capabilities → Add MCP Server"
     echo ""
     echo "  Recommended servers:"
     echo "    AWS Knowledge: https://knowledge-mcp.global.api.aws"

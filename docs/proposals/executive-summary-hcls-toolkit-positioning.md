@@ -1,6 +1,6 @@
 # HCLS Agents Toolkit: Strategic Positioning
 
-> The HCLS Agents Toolkit becomes a library of healthcare domain capabilities — deployable as production agents, consumable as developer skills, and connectable as MCP tools — serving builders in their IDEs, researchers in Q Desktop, and clinicians through production applications.
+> The HCLS Agents Toolkit becomes a library of healthcare domain capabilities — deployable as reference agents, consumable as developer skills, and connectable as MCP tools — serving builders in their IDEs, researchers in Amazon Quick, and clinicians through production applications.
 
 ## Executive Summary
 
@@ -22,9 +22,9 @@ Four distinct offerings serve different audiences at different stages:
 | Offering | What it provides | Who it serves |
 |----------|-----------------|---------------|
 | **AWS Agent Toolkit** | Generic AWS best practices — build, deploy, debug, harden agents on AWS | Any developer building agents on AWS |
-| **HCLS Agents Toolkit** (this repo) | Domain-specific capabilities — HCLS workflows, tools, knowledge, and production-ready agents | Builders and end-users in healthcare and life sciences |
+| **HCLS Agents Toolkit** (this repo) | Domain-specific capabilities — HCLS workflows, tools, knowledge, and reference agents with production best practices | Builders and end-users in healthcare and life sciences |
 | **AI Coding Assistants** (Claude Code, Kiro, Codex) | Developer IDE experience — code generation, deployment, debugging | Developers building software |
-| **End-User Platforms** (Amazon Q Desktop, Claude Co-work) | Natural language interface for non-technical users to execute workflows | Researchers, clinicians, scientists |
+| **End-User Platforms** (Amazon Quick, Claude Co-work) | Natural language interface for non-technical users to execute workflows | Researchers, clinicians, scientists |
 
 ---
 
@@ -33,7 +33,7 @@ Four distinct offerings serve different audiences at different stages:
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                                                                         │
-│   END-USER PLATFORMS (Amazon Q Desktop, Claude Co-work)                 │
+│   END-USER PLATFORMS (Amazon Quick, Claude Co-work)                 │
 │   Non-technical users execute HCLS workflows in natural language        │
 │                                                                         │
 │   Connects to:                                                          │
@@ -98,7 +98,7 @@ Four distinct offerings serve different audiences at different stages:
 | Codex | `.codex-plugin/` + SKILL.md | Skills + MCP servers |
 | Cursor/VS Code/Windsurf | `.mcp.json` | MCP servers directly |
 
-### 3. End-User Platforms (Amazon Q Desktop, Claude Co-work)
+### 3. End-User Platforms (Amazon Quick, Claude Co-work)
 
 **Relationship:** The HCLS Toolkit provides domain tools and skills that non-technical users access directly — without deploying a full agent.
 
@@ -175,7 +175,7 @@ This toolkit is currently positioned as **demonstrative/non-clinical** — not i
 | Persona | Current experience | With integrated toolkit |
 |---------|-------------------|------------------------|
 | **HCLS Developer** (building agents) | Clone repo, read READMEs, manually copy templates | Install HCLS + AWS plugins → guided scaffolding, domain knowledge, automated deployment |
-| **Researcher** (exploring data) | Must deploy a full agent to get domain tools | Connect Q Desktop/Co-work to HCLS MCP servers → immediate domain tool access |
+| **Researcher** (exploring data) | Must deploy a full agent to get domain tools | Connect Amazon Quick/Co-work to HCLS MCP servers → immediate domain tool access |
 | **Clinician** (executing workflows) | No direct access — needs deployed agent + UI | Connect to AgentCore Gateway → natural language clinical workflows |
 | **Platform team** (building internal tools) | Integrate agents one-by-one | Compose catalog agents + shared MCP tools → modular HCLS platform |
 
@@ -183,9 +183,9 @@ This toolkit is currently positioned as **demonstrative/non-clinical** — not i
 
 ## Answering the Market Question
 
-> "Are you building industry-specific modules for Amazon Q Desktop? Can you give us visibility on the roadmap?"
+> "Are you building industry-specific modules for Amazon Quick? Can you give us visibility on the roadmap?"
 
-**Answer:** The HCLS Agents Toolkit provides healthcare and life sciences capabilities as portable skills and MCP tools deployable to AgentCore. These are consumable by any MCP-compatible surface — including Amazon Q Desktop, Claude Co-work, coding assistants, and custom applications. The toolkit includes a catalog of 36+ production-ready agents alongside the domain tools and skills that power them. Builders can deploy complete agents for production use, or connect end-user platforms directly to HCLS domain tools for exploratory and operational workflows.
+**Answer:** The HCLS Agents Toolkit provides healthcare and life sciences capabilities as portable skills and MCP tools deployable to AgentCore. These are consumable by any MCP-compatible surface — including Amazon Quick, Claude Co-work, coding assistants, and custom applications. The toolkit includes a catalog of 36+ reference agents with production best practices alongside the domain tools and skills that power them. Builders can deploy complete agents for production use, or connect end-user platforms directly to HCLS domain tools for exploratory and operational workflows.
 
 ---
 
