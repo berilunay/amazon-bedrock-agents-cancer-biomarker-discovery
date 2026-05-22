@@ -8,7 +8,7 @@ Per-platform guides for connecting the HCLS MCP servers (Biomni Research Gateway
 |----------|--------|--------|---------------|-------------------|
 | [Claude Code](claude-code/) | claude-code/ | `.claude/skills/` or plugin | HTTP with env vars | No (re-source script) |
 | [Kiro](kiro/) | kiro/ | POWER.md + steering/ | stdio via mcp-proxy-for-aws | Yes |
-| [Amazon Quick](q-desktop/) | q-desktop/ | Not yet supported | HTTP via Settings UI | No (manual update) |
+| [Amazon Quick](amazon-quick/) | amazon-quick/ | Skills via Settings UI | HTTP via Settings UI | No (manual update) |
 | [Strands Agents (Python)](strands-python/) | strands-python/ | N/A (system prompt) | streamablehttp_client | Yes (custom TokenManager) |
 | [Codex](codex/) | codex/ | AGENTS.md + skill/ | config.toml | No |
 

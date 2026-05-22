@@ -5,7 +5,7 @@ MCP endpoints powered by AWS Lambda tools deployed behind Amazon Bedrock AgentCo
 ## How It Works
 
 ```
-Your AI Assistant (Claude Code, Q Desktop, etc.)
+Your AI Assistant (Claude Code, Amazon Quick, etc.)
     │
     │ MCP protocol (HTTP + JWT auth)
     │

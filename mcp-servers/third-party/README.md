@@ -30,7 +30,7 @@ Each server folder contains a `.mcp.json` file. To use a server, add its config 
 
 **Claude Code** — merge into your project's `.mcp.json` or reference the file  
 **Kiro** — add to `.kiro/settings/mcp.json`  
-**Q Desktop** — Settings → Capabilities → Add MCP Server → paste the URL  
+**Amazon Quick** — Settings → Capabilities → Add MCP Server → paste the URL  
 **Cursor** — add to `.cursor/mcp.json`
 
 ## Source

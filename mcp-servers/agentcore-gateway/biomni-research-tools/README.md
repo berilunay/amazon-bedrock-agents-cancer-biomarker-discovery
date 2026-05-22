@@ -134,7 +134,7 @@ Add to your project `mcp.json`:
 }
 ```
 
-### Amazon Q Desktop
+### Amazon Quick
 
 1. Open **Settings → Capabilities**
 2. Add MCP server: type `HTTP`, URL = your Gateway URL

@@ -1,93 +1,166 @@
-# Sample Healthcare and Life Sciences Agents on AWS
+# Healthcare and Life Sciences Agents Toolkit on AWS
 
-> **⚠️ Important Update (September 17, 2025):** The new recommended way to deploy agents is using the [Strands](https://strandsagents.com/) framework and [Amazon Bedrock AgentCore](https://aws.amazon.com/bedrock/agentcore/). This codebase is iteratively being updated shortly to reflect these new best practices. The existing deployment methods for individual agents and the entire stack are still functional, we also provide the following examples with the new framework.
+A library of healthcare and life sciences domain capabilities — reference agents with best practices, reusable skills, and MCP-based tools — serving builders in their IDEs, researchers in Amazon Quick, and developers deploying to AWS.
 
-## Bedrock AgentCore and Strands Agents
+> **Note:** This repository is being repositioned to expose HCLS domain capabilities as portable skills and MCP tools across AI coding assistants and end-user platforms, alongside the existing agent catalog. See the [framework design](docs/proposals/framework-design.md) for technical details.
 
-### Agent template
-End to end template that includes deployment of all Bedrock AgentCore components- Runtime, Gateway, Identity, Memory and Observability. Streamlit UI available with Oauth/IAM authentication options. [agentcore-template](agentcore_template/)
+## Overview
 
-### Biomarker discovery agents
-Multiple agents as Strands tools with AgentCore Runtime deployment and a local Streamlit UI. [agentcore-biomarker-discovery](multi_agent_collaboration/cancer_biomarker_discovery/strands_agentcore/)
+The HCLS Agents Toolkit provides domain-specific AI capabilities for healthcare and life sciences workflows on AWS. The catalog of 36+ reference agents is being decomposed into individual skills (domain knowledge) and MCP servers (domain tools) — making the same capabilities accessible across multiple consumption paths without requiring full agent deployment:
 
-### Research agent with Biomni database tools
-Research agent based on the end to end template with all Bedrock AgentCore components and 30+ database tools from [Biomni](https://github.com/snap-stanford/Biomni/tree/main) made available via a AgentCore Gateway [research-agent-biomni-tools](agents_catalog/28-Research-agent-biomni-gateway-tools/)
+| Path | Who | How |
+|------|-----|-----|
+| **AI Coding Assistants** (Claude Code, Kiro, Codex) | Developers building HCLS agents | Install skills + connect MCP servers |
+| **End-User Platforms** (Amazon Quick, Claude Co-work) | Researchers, clinicians, scientists | Connect to HCLS MCP tools via natural language |
+| **Agent Deployments** (Amazon Bedrock AgentCore) | Platform teams, operations | Deploy reference agents with best practices |
 
-### Variant interpreter agent with HealthOmics 
-Processing and interpretation of genomics pipelines at scale with Clinvar and VEP annotations of patient VCF data [agentcore-variant-interpreter-omics](agents_catalog/17-variant-interpreter-agent)
+---
 
-## Project Components
+## Toolkit Components
 
-### Agents catalog
+### Agents Catalog
 
-Library of specialized agents for common workflows across drug research, clinical trials, and commercialization [agent-catalog](agents_catalog/)
+Library of 36+ specialized reference agents spanning drug research, clinical trials, genomics, and commercialization. Each agent demonstrates best practices for building with the [Strands](https://strandsagents.com/) framework and deploying to [Amazon Bedrock AgentCore](https://aws.amazon.com/bedrock/agentcore/).
 
-### Multi-agent collaboration
+**[agents_catalog/](agents_catalog/)**
 
-Framework for agent collaboration and knowledge sharing. End to end examples for cancer biomarker discovery, clinical trial protocol assistant, and competitive intelligence. [multi-agent-collaboration](multi_agent_collaboration/)
+Highlights:
+- [Research agent with 30+ Biomni database tools](agents_catalog/28-Research-agent-biomni-gateway-tools/) — AgentCore Gateway + Runtime
+- [Variant interpreter with HealthOmics](agents_catalog/17-variant-interpreter-agent/) — Genomics at scale
+- [Terminology agent with OLS](agents_catalog/35-Terminology-agent/) — Ontology standardization
+- [C4LS agent with AgentSkills](agents_catalog/36-C4LS-agent/) — Skills + MCP at runtime
 
-### Evaluation
+### MCP Servers
 
-Methods for assessing agent performance and result quality. Agent task and goal metrics for cancer biomarker discovery [evaluations](evaluations/)
+Domain tools exposed as MCP endpoints, organized by deployment model:
 
-The key components are illustrated in the diagram below:
+**[mcp-servers/](mcp-servers/)**
 
-![flow](docs/src/assets/HCLS-agents-toolkit.png)
+| Category | What it provides | Example |
+|----------|-----------------|---------|
+| `agentcore-gateway/` | Deploy CloudFormation → MCP endpoint via AgentCore Gateway | Biomni (30+ biomedical databases) |
+| `agentcore-runtime/` | Deploy MCP server container to AgentCore Runtime | OLS (200+ ontologies) |
+| `aws-public/` | Pre-existing AWS MCP servers (no deploy) | AWS Knowledge, HealthOmics |
+| `third-party/` | Pre-existing public servers (no deploy) | PubMed, Open Targets |
 
+### Skills
 
+Portable domain knowledge that teaches AI assistants how to accomplish HCLS workflows. Skills reference MCP servers by name and describe queries in natural language — no hardcoded tool names.
 
-## Contributing Guidelines
+**[skills/](skills/)**
 
-### Setting Up Your Development Environment
+| Domain | Skills |
+|--------|--------|
+| Genomics | Variant interpretation, single-cell QC, HealthOmics workflows |
+| Drug Discovery | Target identification, compound optimization, safety signals, drug labels |
+| Clinical Trials | Trial search, protocol generation, enrollment monitoring |
+| Biomarkers | Database analysis, multi-agent discovery, pathway analysis |
+| Research | Biomedical databases, deep literature review |
+| Terminology | Ontology lookup, data harmonization |
 
-1. Fork the repository to your GitHub account. Ensure the fork remains public during development and testing.
+### Platform Guides
 
-2. Clone your forked repository to your local machine.
+Per-platform setup instructions to connect skills and MCP servers to your preferred AI tool.
 
-3. Update the template from 'agentcore_template' to add new agents to the `agents_catalog` folder. 
+**[platforms/](platforms/)**
 
-### 🤖 Kiro Power for Agent Development
+| Platform | Guide |
+|----------|-------|
+| Claude Code | [platforms/claude-code/](platforms/claude-code/) |
+| Amazon Quick | [platforms/amazon-quick/](platforms/amazon-quick/) |
+| Kiro | [platforms/kiro/](platforms/kiro/) |
 
-This repository includes a Kiro Power to guide you through building your first AgentCore agent with best practices.
+---
+
+## Quick Start
+
+### For Developers (Claude Code / Kiro)
+
+```bash
+# 1. Clone the repo
+git clone https://github.com/aws-samples/amazon-bedrock-agents-healthcare-lifesciences.git
+cd amazon-bedrock-agents-healthcare-lifesciences
+
+# 2. Follow platform-specific setup
+cat platforms/claude-code/README.md   # or platforms/kiro/
+```
+
+Setup installs HCLS skills, connects MCP servers, and enables natural language queries like:
+
+> "Look up human insulin protein and give me the UniProt ID"
+> "What diseases are associated with EGFR?"
+> "What are the children of seizure (HP:0001250) in HPO?"
+
+For building and deploying agents on AWS, pair this with the [AWS Agent Toolkit](https://github.com/aws/agent-toolkit-for-aws) — it provides generic infrastructure skills (scaffolding, IAM, deployment, debugging) while this toolkit provides the domain-specific knowledge and tools for healthcare and life sciences.
+
+### For Researchers (Amazon Quick)
+
+Connect HCLS MCP servers directly in **Settings > Capabilities > Add MCP Server**. See [platforms/amazon-quick/](platforms/amazon-quick/) for setup.
+
+### For Agent Deployments
+
+Use `agentcore_template/` as your starting point and `agents_catalog/28-Research-agent-biomni-gateway-tools/` as your reference implementation.
+
+```bash
+cd agentcore_template
+python -m venv .venv && source .venv/bin/activate
+uv pip install -r dev-requirements.txt
+./scripts/prereq.sh
+```
+
+See the [AgentCore template](agentcore_template/) for full deployment instructions.
+
+---
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│  CONSUMPTION SURFACES                                                    │
+│  Claude Code · Kiro · Codex · Amazon Quick · Claude Co-work             │
+│                                                                          │
+│  Skills loaded as context  +  MCP servers connected as tools            │
+├─────────────────────────────────────────────────────────────────────────┤
+│  PORTABLE INTERFACE LAYER                                                │
+│                                                                          │
+│  skills/          → Domain knowledge (SKILL.md + scripts + references)  │
+│  mcp-servers/     → Domain tools (Gateway, Runtime, public, 3rd-party)  │
+│  platforms/       → Per-tool configs and setup guides                    │
+├─────────────────────────────────────────────────────────────────────────┤
+│  PRODUCTION RUNTIME (Amazon Bedrock AgentCore)                           │
+│                                                                          │
+│  agents_catalog/  → 36+ reference agents with best practices            │
+│  agentcore_template/ → End-to-end deployment template                   │
+│  multi_agent_collaboration/ → Multi-agent workflow patterns              │
+│  evaluations/     → Agent performance assessment                         │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+The portable interface layer makes catalog agent capabilities consumable across all surfaces — without deploying anything. The reference agents demonstrate best practices for scale, compliance, and determinism.
+
+---
+
+## Kiro Power for Agent Development
+
+This repository includes a Kiro Power to guide you through building AgentCore agents.
 
 **Location:** `powers/hcls-agentcore-builder/`
 
-**Installation:**
-1. Open Kiro Powers UI (Command Palette → "Kiro: Configure Powers")
-2. Click "Add Custom Power"
-3. Select "Local Directory"
-4. Enter full path: `/path/to/repo/powers/hcls-agentcore-builder`
-5. Click "Add"
+See [powers/hcls-agentcore-builder/](powers/hcls-agentcore-builder/) for installation instructions.
 
-**What it provides:**
-- Step-by-step guidance from POC to production
-- Best practices for production-ready agents
-- Direct references to agentcore_template/ and example agents
-- Agent patterns for HCLS use cases
-- Troubleshooting and common pitfalls
+---
 
-The power emphasizes `agentcore_template/` as your starting point and `agents_catalog/28-Research-agent-biomni-gateway-tools/` as your production reference.
+## Contributing
 
+Follow the guidelines to contribute a new agent: **[add-a-new-agent](https://aws-samples.github.io/amazon-bedrock-agents-healthcare-lifesciences/guides/)**
 
-### Submitting a Pull Request
+1. Fork the repository and create a branch
+2. Use `agentcore_template/` as your starting point for new agents
+3. Add to `agents_catalog/` following naming: `<two-digit-index>-<Agent-Name>`
+4. Include a README.md describing the agent and deployment steps
+5. Open a pull request to `main`
 
-**Follow the guidelines to contribute a new agent to the catalog here: [add-a-new-agent](https://aws-samples.github.io/amazon-bedrock-agents-healthcare-lifesciences/guides/)
-
-1. Ensure you have forked the main repository: [amazon-bedrock-agents-healthcare-lifesciences](https://github.com/aws-samples/amazon-bedrock-agents-healthcare-lifesciences/tree/main)
-
-2. Create a new branch in your forked repository for your changes.
-
-3. Implement your changes, following the project's coding standards and guidelines.
-
-4. Commit your changes with clear, concise commit messages.
-
-5. Push your branch to your forked repository on GitHub.
-
-6. Open a pull request from your branch to the main repository's `main` branch.
-
-7. Provide a clear description of your changes in the pull request, including any relevant issue numbers.
-
-8. Be prepared to address any feedback or questions during the code review process.
+---
 
 ## License
 
@@ -95,4 +168,4 @@ This project is licensed under the MIT-0 License.
 
 ## Legal Notes
 
-**<span style="color:RED">Important</span>**: This solution is for demonstrative purposes only. It is not for clinical use and is not a substitute for professional medical advice, diagnosis, or treatment. **The associated notebooks, including the trained model and sample data, are not intended for production.** It is each customers’ responsibility to determine whether they are subject to HIPAA, and if so, how best to comply with HIPAA and its implementing regulations. Before using AWS in connection with protected health information, customers must enter an AWS Business Associate Addendum (BAA) and follow its configuration requirements.
+**Important**: This solution is for demonstrative purposes only. It is not for clinical use and is not a substitute for professional medical advice, diagnosis, or treatment. The associated notebooks, including trained models and sample data, are not intended for production. It is each customer's responsibility to determine whether they are subject to HIPAA, and if so, how best to comply with HIPAA and its implementing regulations. Before using AWS in connection with protected health information, customers must enter an AWS Business Associate Addendum (BAA) and follow its configuration requirements.

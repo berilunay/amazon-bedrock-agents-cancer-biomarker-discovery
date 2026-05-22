@@ -5,7 +5,7 @@ Custom MCP servers deployed as containers on Amazon Bedrock AgentCore Runtime. Y
 ## How It Works
 
 ```
-Your AI Assistant (Claude Code, Q Desktop, etc.)
+Your AI Assistant (Claude Code, Amazon Quick, etc.)
     │
     │ MCP protocol (HTTP + IAM SigV4 auth)
     │
