@@ -67,7 +67,7 @@ Per-platform setup instructions to connect skills and MCP servers to your prefer
 | Platform | Guide |
 |----------|-------|
 | Claude Code | [platforms/claude-code/](platforms/claude-code/) |
-| Amazon Quick | [platforms/q-desktop/](platforms/q-desktop/) |
+| Amazon Quick | [platforms/amazon-quick/](platforms/amazon-quick/) |
 | Kiro | [platforms/kiro/](platforms/kiro/) |
 
 ---
@@ -95,7 +95,7 @@ For building and deploying agents on AWS, pair this with the [AWS Agent Toolkit]
 
 ### For Researchers (Amazon Quick)
 
-Connect HCLS MCP servers directly in **Settings > Capabilities > Add MCP Server**. See [platforms/q-desktop/](platforms/q-desktop/) for setup.
+Connect HCLS MCP servers directly in **Settings > Capabilities > Add MCP Server**. See [platforms/amazon-quick/](platforms/amazon-quick/) for setup.
 
 ### For Agent Deployments
 

@@ -34,7 +34,7 @@ This document describes the design of the skills, MCP servers, plugins, and plat
 │  SKILL.md files    │    │  • gateway (deploy)│    │  • claude-code/       │
 │  with scripts/     │    │  • runtime (deploy)│    │  • kiro/              │
 │  and references/   │    │  • aws-public      │    │  • codex/             │
-│                    │    │  • third-party     │    │  • q-desktop/         │
+│                    │    │  • third-party     │    │  • amazon-quick/         │
 │                    │    │                    │    │  • setup.sh           │
 └────────────────────┘    └────────────────────┘    └───────────────────────┘
         │                           │
@@ -381,10 +381,10 @@ platforms/codex/
 
 Installed via: `codex plugin marketplace add aws-samples/amazon-bedrock-agents-healthcare-lifesciences`
 
-### Amazon Quick (`platforms/q-desktop/`)
+### Amazon Quick (`platforms/amazon-quick/`)
 
 ```
-platforms/q-desktop/
+platforms/amazon-quick/
 ├── README.md                           ← Setup instructions
 ├── skills/                             ← Skills formatted for ~/.quickwork/skills/
 │   └── hcls-<domain>/SKILL.md

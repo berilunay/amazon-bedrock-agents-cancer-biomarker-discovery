@@ -24,7 +24,7 @@ codex plugin marketplace add aws-samples/amazon-bedrock-agents-healthcare-lifesc
 codex plugin install hcls-agents
 ```
 
-### Kiro, Cursor, Q Desktop
+### Kiro, Cursor, Amazon Quick
 
 See `platforms/` for per-tool setup instructions, or run:
 

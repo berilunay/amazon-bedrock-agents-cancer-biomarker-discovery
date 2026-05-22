@@ -84,7 +84,7 @@ case $PLATFORM in
     ;;
   4) # Amazon Quick
     mkdir -p ~/.quickwork/skills
-    cp -r "$SCRIPT_DIR/q-desktop/skills/"* ~/.quickwork/skills/ 2>/dev/null || true
+    cp -r "$SCRIPT_DIR/amazon-quick/skills/"* ~/.quickwork/skills/ 2>/dev/null || true
     echo "  Copied skills to ~/.quickwork/skills/"
     echo ""
     echo "  MCP servers must be added manually:"

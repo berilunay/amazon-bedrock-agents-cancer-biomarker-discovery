@@ -1,6 +1,6 @@
 # MCP Servers
 
-MCP (Model Context Protocol) servers provide domain tools accessible from any MCP-compatible client — AI coding assistants (Claude Code, Kiro, Codex, Cursor), end-user platforms (Amazon Q Desktop, Claude Co-work), and production agents.
+MCP (Model Context Protocol) servers provide domain tools accessible from any MCP-compatible client — AI coding assistants (Claude Code, Kiro, Codex, Cursor), end-user platforms (Amazon Quick, Claude Co-work), and deployed agents.
 
 ## Categories
 
@@ -66,4 +66,4 @@ Skill: genomics-variant-interpretation
   Step 4: "Generate clinical interpretation report"
 ```
 
-No agent deployment needed — skills + MCP servers work directly in the user's coding assistant or Q Desktop.
+No agent deployment needed — skills + MCP servers work directly in the user's coding assistant or Amazon Quick.

@@ -155,7 +155,7 @@ def validate_platform_configs():
     print("\n[Platform Configs]")
 
     platforms_dir = REPO_ROOT / "platforms"
-    expected = ["claude-code", "kiro", "codex", "q-desktop"]
+    expected = ["claude-code", "kiro", "codex", "amazon-quick"]
     for platform in expected:
         pdir = platforms_dir / platform
         if not pdir.exists():
