@@ -85,11 +85,13 @@ cd amazon-bedrock-agents-healthcare-lifesciences
 cat platforms/claude-code/README.md   # or platforms/kiro/
 ```
 
-Setup installs skills, connects MCP servers, and enables natural language queries like:
+Setup installs HCLS skills, connects MCP servers, and enables natural language queries like:
 
 > "Look up human insulin protein and give me the UniProt ID"
 > "What diseases are associated with EGFR?"
 > "What are the children of seizure (HP:0001250) in HPO?"
+
+For building and deploying agents on AWS, pair this with the [AWS Agent Toolkit](https://github.com/aws/agent-toolkit-for-aws) — it provides generic infrastructure skills (scaffolding, IAM, deployment, debugging) while this toolkit provides the domain-specific knowledge and tools for healthcare and life sciences.
 
 ### For Researchers (Amazon Quick)
 
