@@ -41,8 +41,8 @@ def _find_agentcore_cli() -> str:
 
 
 def _run(cmd: str, check: bool = True) -> subprocess.CompletedProcess:
-    """Run a shell command and stream output."""
-    result = subprocess.run(cmd, shell=True, capture_output=False, text=True)
+    """Run a command and stream output."""
+    result = subprocess.run(cmd.split(), capture_output=False, text=True)  # nosec B603
     if check and result.returncode != 0:
         sys.exit(result.returncode)
     return result
@@ -61,7 +61,7 @@ def deploy(dry_run, verbose, target):
         sys.exit(1)
 
     # Verify version
-    result = subprocess.run(f"{cli} --version", shell=True, capture_output=True, text=True)
+    result = subprocess.run(f"{cli} --version".split(), capture_output=True, text=True)  # nosec B603
     click.echo(f"Using agentcore CLI v{result.stdout.strip()}")
 
     # Validate config
