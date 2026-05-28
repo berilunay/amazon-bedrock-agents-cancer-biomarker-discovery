@@ -31,6 +31,13 @@ def download_s3_folder(s3_uri, local_dir):
     
     bucket_name = s3_uri.split('//')[1].split('/')[0]
     prefix = '/'.join(s3_uri.split('//')[1].split('/')[1:])
+    # Validate inputs to prevent command injection
+    import re
+    if not re.match(r'^[a-zA-Z0-9._-]+$', bucket_name):
+        raise ValueError(f"Invalid bucket name: {bucket_name}")
+    if prefix and not re.match(r'^[a-zA-Z0-9._/=-]+$', prefix):
+        raise ValueError(f"Invalid S3 prefix: {prefix}")
+
     
     logging.info(f"Downloading from bucket: {bucket_name}, prefix: {prefix} to {local_dir}")
     
@@ -39,7 +46,7 @@ def download_s3_folder(s3_uri, local_dir):
     logging.info(f"Running command: {' '.join(cmd)}")
     
     try:
-        subprocess.check_call(cmd)  # nosec B603 - args are constructed from validated inputs
+        subprocess.check_call(cmd)  # nosec B603 - args are validated with regex above, shell=False (list form)
         logging.info(f"Successfully downloaded S3 folder to {local_dir}")
     except subprocess.CalledProcessError as e:
         logging.error(f"Failed to download S3 folder: {e}")
