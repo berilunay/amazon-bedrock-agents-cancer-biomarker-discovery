@@ -14,3 +14,4 @@ current_state.json
 medical_devices.db
 medical_devices.db-shm
 medical_devices.db-wal
+.bedrock_agentcore.yaml
