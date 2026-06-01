@@ -16,6 +16,32 @@ Research agent based on the end to end template with all Bedrock AgentCore compo
 ### Variant interpreter agent with HealthOmics 
 Processing and interpretation of genomics pipelines at scale with Clinvar and VEP annotations of patient VCF data [agentcore-variant-interpreter-omics](agents_catalog/17-variant-interpreter-agent)
 
+## Deploying an Agent
+
+Each agent in the catalog can be deployed to your AWS account using the [AgentCore CLI](https://www.npmjs.com/package/@aws/agentcore).
+
+### Prerequisites
+
+- AWS CLI configured with valid credentials
+- Node.js >= 18 and npm
+- `@aws/agentcore` CLI: `npm install -g @aws/agentcore`
+- Docker running
+
+### Quick Start
+
+```bash
+# List available agents
+./deploy.sh --list
+
+# Deploy a specific agent (runs agentcore init on first use)
+./deploy.sh 22-Safety-Signal-Detection-Agent
+
+# Preview without deploying
+./deploy.sh 22-Safety-Signal-Detection-Agent --dry-run
+```
+
+The script verifies prerequisites, runs `agentcore init` to configure your account/region if needed, then deploys. Each agent also has a `deploy.py` script in its `agentcore/` directory for direct use.
+
 ## Project Components
 
 ### Agents catalog
