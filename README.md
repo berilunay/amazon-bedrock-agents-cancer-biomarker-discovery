@@ -27,20 +27,36 @@ Each agent in the catalog can be deployed to your AWS account using the [AgentCo
 - `@aws/agentcore` CLI: `npm install -g @aws/agentcore`
 - Docker running
 
-### Quick Start
+### Deploy Options
+
+There are three ways to deploy an agent — all use the AgentCore CLI under the hood:
+
+**Option 1: `deploy.sh` (recommended for first-time users)**
 
 ```bash
-# List available agents
-./deploy.sh --list
-
-# Deploy a specific agent (runs agentcore init on first use)
-./deploy.sh 22-Safety-Signal-Detection-Agent
-
-# Preview without deploying
-./deploy.sh 22-Safety-Signal-Detection-Agent --dry-run
+./deploy.sh --list                              # See available agents
+./deploy.sh 22-Safety-Signal-Detection-Agent    # Deploy (checks prereqs, runs init if needed)
+./deploy.sh 22-Safety-Signal-Detection-Agent --dry-run  # Preview only
 ```
 
-The script verifies prerequisites, runs `agentcore init` to configure your account/region if needed, then deploys. Each agent also has a `deploy.py` script in its `agentcore/` directory for direct use.
+**Option 2: AgentCore CLI directly**
+
+```bash
+cd agents_catalog/22-Safety-Signal-Detection-Agent/agentcore/
+agentcore init      # Configure your account, region, and role
+agentcore deploy    # Build and deploy
+agentcore status    # Check deployment
+```
+
+**Option 3: `deploy.py` (per-agent Python wrapper)**
+
+```bash
+cd agents_catalog/22-Safety-Signal-Detection-Agent/agentcore/
+python deploy.py            # Wraps the agentcore CLI with validation
+python deploy.py --dry-run  # Preview
+```
+
+All three options produce the same result. `deploy.sh` is the simplest entry point — it verifies prerequisites and handles `agentcore init` automatically. The CLI and `deploy.py` give you more control if you're already familiar with AgentCore.
 
 ## Project Components
 
